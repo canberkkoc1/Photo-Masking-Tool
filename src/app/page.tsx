@@ -1,9 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import ImageUpload from "@/components/PhotoUploder";
+import Toolbar from "@/components/Toolbar";
 
 export default function Home() {
   const [imageURL, setImageURL] = useState<string | null>(null);
+  const [mode, setMode] = useState<"brush" | "rectangle" | "lasso">("brush");
 
   const handleImageSelect = (file: File) => {
     const reader = new FileReader();
@@ -15,16 +17,30 @@ export default function Home() {
 
     reader.onerror = () => {
       alert("Failed to read the file!");
-    }
-
+    };
 
     reader.readAsDataURL(file);
+  };
+
+  const handleModeChange = (newMode: "brush" | "rectangle" | "lasso") => {
+    setMode(newMode);
   };
 
   return (
     <main className="min-h-screen bg-white text-white flex flex-col items-center p-4">
       <h1 className="text-3xl font-bold mb-4 text-black">Photo Masking Tool</h1>
       {!imageURL && <ImageUpload onSelect={handleImageSelect} />}
+
+      {imageURL && (
+        <>
+          <div
+            className="flex justify-center w-full mt-4"
+            style={{ maxWidth: "600px" }}
+          >
+            <Toolbar onModeChange={handleModeChange} currentMode={mode} />
+          </div>
+        </>
+      )}
     </main>
   );
 }
