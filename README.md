@@ -1,36 +1,109 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Frontend Case: Masking Tool
 
-## Getting Started
+This project is a frontend application for creating and managing masks on an image using interactive tools like **Lasso**, **Brush**, and **Rectangle**. Users can load an image, draw masks on it, and export the mask data in a black-and-white format.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Features
+
+### 1. Photo Upload
+- Users can upload an image in **PNG**, **JPEG**, or **JPG** format.
+- Uploaded images are displayed in the drawing area for further actions.
+
+### 2. Mask Tools
+- **Lasso Tool**:
+  - Allows users to draw a polygon mask by clicking multiple points.
+  - The points are connected to form a closed polygon.
+
+- **Brush Tool**:
+  - Enables freehand drawing by dragging the mouse over the image.
+  - Suitable for more organic and detailed mask creation.
+
+- **Rectangle Tool**:
+  - Lets users draw rectangular or square masks by clicking and dragging the mouse.
+
+### 3. Export Functionality
+- The masked area can be exported as a black-and-white image.
+- Non-masked areas are set to black, and the masked area is white.
+
+---
+
+## Technologies Used
+
+- **Framework**: [Next.js](https://nextjs.org/) (v13+ with App Router)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Language**: TypeScript
+- **Canvas API**: Used for real-time drawing and rendering on the image.
+
+---
+
+## Project Structure
+
+```plaintext
+photo-masking-tool/
+├── src/
+│   ├── app/
+│   │   ├── page.tsx           # Main page component
+│   │   ├── globals.css        # Global styles
+│   │   ├── layout.tsx         # Global layout
+│   ├── components/
+│   │   ├── PhotoUploader.tsx  # Image upload functionality
+│   │   ├── MaskTool.tsx       # Interactive drawing tools
+│   │   ├── Toolbar.tsx        # Toolbar component
+├── tailwind.config.js         # Tailwind configuration
+├── tsconfig.json              # TypeScript configuration
+└── package.json               # Project dependencies
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Setup Instructions
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 1. Clone the Repository
+```bash
+git clone https://github.com/your-username/frontend-case.git
+cd frontend-case
+```
 
-## Learn More
+### 2. Install Dependencies
+```bash
+npm install
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 3. Run the Development Server
+```bash
+npm run dev
+```
+- Open your browser and navigate to `http://localhost:3000`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## How to Use
 
-## Deploy on Vercel
+1. **Upload Image**:
+   - Click the `Add Photo` button and upload an image.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2. **Select a Tool**:
+   - Choose one of the tools (**Lasso**, **Brush**, or **Rectangle**) from the toolbar.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. **Draw Masks**:
+   - Use the selected tool to draw on the image.
+
+4. **Export Mask**:
+   - Click the `Export` button to save the mask as a black-and-white image.
+
+---
+
+## Screenshots
+
+### Masking Tools
+![Masking Tools](public/assets/masking-tools.jpg)
+![Masking Tools](public/assets/brush-tool.jpg)
+![Masking Tools](public/assets/lasso-tool.jpg)
+![Masking Tools](public/assets/rectangle-tool.jpg)
+
+### Exported Mask Example
+![Exported Mask](public/assets/exported-brush.png)
+![Exported Mask](public/assets/exported-lasso.png)
+![Exported Mask](public/assets/exported-rectangle.png)
+

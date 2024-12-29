@@ -180,6 +180,55 @@ export default function MaskEditor({
     };
 
 
+    const handleExport = () => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+
+        const exportCanvas = document.createElement("canvas");
+        const exportCtx = exportCanvas.getContext("2d");
+        if (!exportCtx) return;
+
+        exportCanvas.width = canvas.width;
+        exportCanvas.height = canvas.height;
+
+        exportCtx.fillStyle = "black";
+        exportCtx.fillRect(0, 0, exportCanvas.width, exportCanvas.height);
+
+        drawings.forEach((drawing) => {
+            exportCtx.fillStyle = "white";
+            exportCtx.strokeStyle = "white";
+            if (drawing.type === "brush") {
+                exportCtx.lineWidth = 20;
+                exportCtx.lineCap = "round";
+                exportCtx.beginPath();
+                drawing.points.forEach(
+                    (point: { x: number; y: number }, index: number) => {
+                        if (index === 0) exportCtx.moveTo(point.x, point.y);
+                        else exportCtx.lineTo(point.x, point.y);
+                    }
+                );
+                exportCtx.stroke();
+            } else if (drawing.type === "rectangle") {
+                const { x, y, width, height } = drawing.points;
+                exportCtx.fillRect(x, y, width, height);
+            } else if (drawing.type === "lasso") {
+                exportCtx.beginPath();
+                drawing.points.forEach(
+                    (point: { x: number; y: number }, index: number) => {
+                        if (index === 0) exportCtx.moveTo(point.x, point.y);
+                        else exportCtx.lineTo(point.x, point.y);
+                    }
+                );
+                exportCtx.closePath();
+                exportCtx.fill();
+            }
+        });
+
+        const dataURL = exportCanvas.toDataURL("image/png");
+        onExportCanvas(dataURL);
+    };
+
+
 
     return(
         <div className="flex flex-col items-center">
@@ -191,6 +240,7 @@ export default function MaskEditor({
             style={{ border: "1px solid black" }}
         />
         <button
+            onClick={handleExport}
             className="mt-4 px-4 py-2 bg-red-900 text-white hover:bg-red-300 hover:text-black"
         >
             Export
